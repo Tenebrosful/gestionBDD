@@ -10,4 +10,9 @@ class Query
     private $args = [];
     private $sql = '';
 
+    public static function table(string $nomTable){
+        $query = new Query();
+        $query->sqltable = $nomTable;
+        return $query;
+    }
 }
