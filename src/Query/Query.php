@@ -26,11 +26,31 @@ class Query
      * @param mixed $valeur
      * @return Query
      */
-    public function where(string $colonne, string $comparateur, $valeur){
+    public function where(string $colonne, string $comparateur, $valeur)
+    {
         $this->where[]['col'] = $colonne;
         $this->where[]['op'] = $comparateur;
         $this->where[]['val'] = $valeur;
         $this->args[] = $valeur;
         return $this;
+    }
+
+    /**
+     * @TODO Finir
+     */
+    public function get()
+    {
+        $sql = `select $this->fields from $this->sqltable`;
+
+        if (!empty($this->where)) {
+            $sql .= "where";
+            foreach ($this->where as $key => $condition) {
+                if ($key !== 0)
+                    $sql .= " AND";
+                $sql .= implode(' ', $condition);
+            }
+        }
+
+        $stmt = $pdo->prepare($this->sql);
     }
 }
